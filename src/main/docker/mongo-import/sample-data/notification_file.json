@@ -1,0 +1,117 @@
+{
+	"_id":"Traffic",
+    "_class" : "mx.infotec.smartcity.backend.model.Notification",
+	"name":"Traffic",
+	"subnotifications":["Traffic jam",
+						"Moderate traffic jam",
+						"Standstill traffic jam",						
+						"Heavy traffic jam",
+						"Minor accident",
+						"Car accident",						
+						"Car in wrong direction",						
+						"Car Stopped",
+						"Roadworks",
+						"Road closed",
+						"Hazard on road",
+						"Pothole",
+						"Congestion on road",
+						"Injured Biker",
+						"Alligator cracking"]
+}
+{
+	"_id":"Weather",
+    "_class" : "mx.infotec.smartcity.backend.model.Notification",
+	"name":"Weather",
+	"subnotifications":["Rainfall",
+						"Temperature",
+						"High temperature",
+						"Low temperature",
+						"Heat wave",
+						"Ice",
+						"Relative humidity",
+						"Wind",
+						"Flood",
+						"Fog",
+						"Tornado",
+						"Tsunami",
+						"Snow",
+						"Storm",
+						"Tropical cyclone",
+						"Tropical storm",
+						"Hurricane"
+						]
+}
+{
+	"_id":"Environment",
+    "_class" : "mx.infotec.smartcity.backend.model.Notification",
+	"name":"Environment",
+	"subnotifications":["Smog",
+						"Air pollution",
+						"Pre-contingency alert",
+						"Contingency alert",
+						"CO",
+						"NO2",
+						"SO2",
+						"O3",
+						"PM10",
+						"Gas produced by volcanoes",
+						"Gas produced by industrial processes",
+						"Gas emitted from vehicular exhaust",
+						"Gas emitted from agriculture, including animal husbandry and NH3-based fertilizer applications",
+						"Odors from garbage, sewage, and industrial processes",
+						"Radioactive pollutants produced by nuclear explosions and war explosives"]
+}
+{
+	"_id":"Pollen",
+    "_class" : "mx.infotec.smartcity.backend.model.Notification",
+	"name":"Pollen",
+	"subnotifications":["Symptoms or discomforts of users",
+						"Level of pollen on air",
+						"Pollen concentration",
+						"Sinus pressure",
+						"Runny nose",
+						"Watery eyes",
+						"Cough",
+						"Nasal congestion"]
+}
+{
+	"_id":"Health",
+    "_class" : "mx.infotec.smartcity.backend.model.Notification",
+	"name":"Health",
+	"subnotifications":["Asthma attack",
+						"Bumped patient",
+						"Fallen patient",
+						"Heart attack"
+						]
+}
+{
+	"_id":"Security",
+    "_class" : "mx.infotec.smartcity.backend.model.Notification",
+	"name":"Security",
+	"subnotifications":["Assault",
+						"Robbery",
+						"Suspicious action"
+						]
+}
+{
+	"_id":"SOSAlerts",
+    "_class" : "mx.infotec.smartcity.backend.model.Notification",
+	"name":"SOS Alerts",
+	"subnotifications":["Shelter",
+						"Collection center",
+						"Hospital",
+						"Blood bank",
+						"Earthquake",
+						"Collapse",
+						"Collapsed building",
+						"Building on the verge of collapse",
+						"Sinking",
+						"Major crack",
+						"Minor crack",
+						"Light transformer dropped",
+						"Fallen light post",
+						"Fire",
+						"Water shortage",
+						"Without light service",
+						"Gas leak"]
+}

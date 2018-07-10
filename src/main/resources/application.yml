@@ -1,0 +1,205 @@
+spring:
+    application:
+        name: back-sdk
+    data:
+        mongodb:
+            database: smartcity
+    mail:
+        active: true
+        host: smtp.gmail.com
+        port: 587
+        protocol: smtp
+        from: smartcity.sdk@gmail.com
+        username: smartcity.sdk@gmail.com
+        password: 
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+        support: smartcityapp@smartsdk.eu
+    jackson:
+        date-format: yyyy-MM-dd
+
+server:
+    port: 9000
+    contextPath: /back-sdk
+
+idm:
+    servers:
+        keystone: http://localhost:5000
+        orion: http://localhost:1026
+    admin:
+        username: idm
+        password: idm
+    default:
+        domain: default
+front:
+    url: http://localhost:4200/#
+    image-url: http://localhost:4200
+    
+sa:
+  account: admin@localhost.mx
+  passwd: adminadmin
+
+logging:
+  level:
+    org.springframework.data:
+      mongodb.core.MongoTemplate: DEBUG
+
+
+---
+spring:
+    profiles: development
+    application:
+        name: back-sdk
+    data:
+        mongodb:
+            database: smartcity
+    mail:
+        active: true
+        host: smtp.gmail.com
+        port: 587
+        protocol: smtp
+        from: smartcity.sdk@gmail.com
+        username: smartcity.sdk@gmail.com
+        password:
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+        support: smartcityapp@smartsdk.eu
+    jackson:
+        date-format: yyyy-MM-dd
+
+server:
+    port: 9000
+    contextPath: /back-sdk
+
+idm:
+    servers:
+        keystone: http://localhost:5000
+        orion: http://localhost:1026
+    admin:
+        username: idm
+        password: idm
+    default:
+        domain: default
+front:
+    url: http://localhost:4200/#
+    image-url: http://localhost:4200
+
+sa:
+  account: admin@localhost.mx
+  passwd: adminadmin
+  
+logging:
+  level:
+    org.springframework.data:
+      mongodb.core.MongoTemplate: DEBUG
+
+---
+spring:
+    profiles: qa
+    application:
+        name: back-sdk
+    data:
+        mongodb:
+            database: smartcity
+    mail:
+        active: true
+        host: smtp.gmail.com
+        port: 587
+        protocol: smtp
+        from: smartcity.sdk@gmail.com
+        username: smartcity.sdk@gmail.com
+        password:
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+        support: smartcityapp@smartsdk.eu
+    jackson:
+        date-format: yyyy-MM-dd
+
+server:
+    port: 8080
+    contextPath: /back-sdk
+
+# Rodrigo's cloud server
+idm:
+    servers:
+        keystone: http://localhost:5000
+        orion: http://localhost:1026
+    admin:
+        username: idm
+        password: idm
+    default:
+        domain: default
+front:
+    url: http://207.249.127.124/#
+    image-url: http://207.249.127.124
+
+sa:
+  account: admin@localhost.mx
+  passwd: adminadmin
+  
+logging:
+  level:
+    org.springframework.data:
+      mongodb.core.MongoTemplate: WARN
+
+---
+spring:
+    profiles: production
+    application:
+        name: back-sdk
+    data:
+        mongodb:
+            database: smartcity
+            uri: mongodb://smart-sdk-mongodb:27017
+    mail:
+        active: true
+        host: smtp.gmail.com
+        port: 587
+        protocol: smtp
+        from: smartcity.sdk@gmail.com
+        username: smartcity.sdk@gmail.com
+        password: 
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+        support: smartcityapp@smartsdk.eu
+    jackson:
+        date-format: yyyy-MM-dd
+
+server:
+    port: 8080
+    contextPath: /back-sdk
+
+# Erik's cloud server
+idm:
+    servers:
+        keystone: http://localhost:5000
+        orion: http://localhost:1026
+    admin:
+        username: idm
+        password: idm
+    default:
+        domain: default
+front:
+    url: http://207.249.127.135/#
+    image-url: http://207.249.127.135
+
+sa:
+  account: admin@localhost.mx
+  passwd: adminadmin
+
+logging:
+  level:
+    org.springframework.data:
+      mongodb.core.MongoTemplate: WARN

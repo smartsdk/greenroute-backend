@@ -1,0 +1,89 @@
+version: '3'
+services:
+
+    smart-sdk-back:
+        image: samjm/smart-sdk-back:1.0
+        depends_on:
+            - smart-sdk-keyrock
+            - smart-sdk-mongodb
+        environment:
+            - SPRING_PROFILES_ACTIVE=production
+            - SPRING_DATA_MONGODB_URI=mongodb://smart-sdk-mongodb:27017
+            - IDM_SERVERS_KEYSTONE=http://smart-sdk-keyrock:5000
+            - IDM_SERVERS_ORION=http://smart-sdk-orion:1026
+        ports:
+            - "8080:8080"
+
+    smart-sdk-front:
+        image: samjm/smart-sdk-front:latest
+        ports:
+          - "80:80"
+
+    smart-sdk-mongodb:
+        image: mongo:3.2.6
+        volumes:
+          - mongodb-data:/data/db
+        deploy:
+          mode: global
+          restart_policy:
+            condition: on-failure
+          update_config:
+            parallelism: 1
+            delay: 1m30s
+
+    mongo-seeder:
+        image: samjm/mongo-seed:latest
+        depends_on:
+          - smart-sdk-mongodb
+        deploy:
+          restart_policy:
+            condition: on-failure
+
+    smart-sdk-orion:
+        image: fiware/orion:1.14.0
+        ports:
+          - "1026:1026"
+        command: -dbhost smart-sdk-mongodb
+        depends_on:
+          - smart-sdk-mongodb
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://0.0.0.0:1026/version"]
+          interval: 1m
+          timeout: 10s
+          retries: 3
+
+    smart-sdk-keyrock:
+        image: rodrigonievez/infotec-idm-image
+
+    quantumleap:
+      image: smartsdk/quantumleap
+      ports:
+        - "8668:8668"
+      depends_on:
+        - smart-sdk-mongodb
+        - smart-sdk-orion
+        - crate
+      environment:
+        - CRATE_HOST=crate
+
+    crate:
+      image: crate:1.0.5
+      ports:
+        # Admin UI
+        - "4200:4200"
+        # Transport protocol
+        - "4300:4300"
+      command: -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*"
+
+    grafana:
+      image: grafana/grafana
+      ports:
+        - "3000:3000"
+      environment:
+        - GF_INSTALL_PLUGINS=crate-datasource,grafana-clock-panel
+      depends_on:
+        - crate
+
+volumes:
+ mongodb-data:
+   external: true
