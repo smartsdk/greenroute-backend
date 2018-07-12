@@ -2,7 +2,7 @@ version: '3'
 services:
 
     smart-sdk-back:
-        image: samjm/smart-sdk-back:1.0
+        image: smartsdk/greenroute-back:latest
         depends_on:
             - smart-sdk-keyrock
             - smart-sdk-mongodb
@@ -15,7 +15,7 @@ services:
             - "8080:8080"
 
     smart-sdk-front:
-        image: samjm/smart-sdk-front:latest
+        image: smartsdk/greenroute-front:latest
         ports:
           - "80:80"
 
