@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+    smart-sdk-back:
+        image: smartsdk/greenroute-back:latest
+        depends_on:
+            - smart-sdk-keyrock
+        environment:
+            - SPRING_PROFILES_ACTIVE=production
+            - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017
+            - IDM_SERVERS_KEYSTONE=http://smart-sdk-keyrock:5000
+            - IDM_SERVERS_ORION=http://orion:1026
+        ports:
+            - "8080:8080"
+        networks:
+          - backend
+
+    smart-sdk-front:
+        image: smartsdk/greenroute-front:latest
+        ports:
+          - "80:80"
+        environment:
+          - GR_BACKEND_URL=${GR_BACKEND_URL:-http://130.206.126.100:8080/back-sdk}
+          - GR_GRAFANA_URL=${GR_GRAFANA_URL:-http://130.206.126.100:3000/dashboard/db/airquality-dashboard}
+        networks:
+          - frontend
+          - backend  # because of keyrock
+
+    mongo-seeder:
+        image: smartsdk/mongo-seed:latest
+        deploy:
+          restart_policy:
+            condition: on-failure
+        environment:
+          - GR_MONGO_URL=${GR_MONGO_URL:-mongodb://mongo:27017}
+        networks:
+          - backend
+
+    smart-sdk-keyrock:
+        image: rodrigonievez/infotec-idm-image
+        networks:
+          - backend
+
+networks:
+  backend:
+    external: true
+  frontend:
+    external: true
+
+volumes:
+ mongodb-data:
+   external: true
