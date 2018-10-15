@@ -19,6 +19,8 @@ public interface TripRepository extends MongoRepository<Trip, String>{
     
     public List<Trip> findAllById(List<String> listId, Pageable pageable);
 
+    public List<Trip> findAllByRefUser(String refUser);
+    
     public Page<Trip> findAllByOrderByTimeDesc(Pageable pageable);
     
     //public List<Trip> findAllByOrderByDateDesc();

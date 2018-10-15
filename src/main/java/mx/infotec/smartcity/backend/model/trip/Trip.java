@@ -48,7 +48,11 @@ public class Trip {
     private String maxWalkDistance;
     @JsonProperty("segments")
     private List<Segment> segments = null;
-    @JsonIgnore
+
+	private String refUser;
+    private boolean shared;
+
+	@JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     
@@ -157,5 +161,20 @@ public class Trip {
     public void setId(String id) {
         this.id = id;
     }
+    
+    public String getRefUser() {
+    	return refUser;
+    }
+    
+    public void setRefUser(String refUser) {
+    	this.refUser = refUser;
+    }
 
+    public boolean isShared() {
+    	return shared;
+    }
+    
+    public void setShared(boolean shared) {
+    	this.shared = shared;
+    }
 }

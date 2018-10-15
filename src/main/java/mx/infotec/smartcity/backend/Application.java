@@ -68,7 +68,7 @@ public class Application extends SpringBootServletInitializer {
                   "/alerts/*", "/vehicletype/*", "/groups/*", "/notifications/*", "/transport-schedule/*", "/agency/*");*/
         
         registration.addUrlPatterns("/user-profile/*", "/public-transport/*", "/register/update-password", "/admin/*",
-                  "/vehicletype/*", "/groups/*", "/notifications/*", "/transport-schedule/*", "/agency/*");
+                  "/vehicletype/*", "/groups/*", "/notifications/*", "/transport-schedule/*", "/agency/*", "/trips/*");
         
         registration.setName("loggedUserFilter");
         registration.setOrder(1);
