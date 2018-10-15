@@ -90,14 +90,14 @@ public class Alert implements Serializable {
             this.type = data.getType();
             this.alertType = OrionMapper.extractProperty(data, "category");
             this.eventObserved = firstLetterCaps(setSubCategoryAlert(OrionMapper.extractProperty(data, "subCategory")));
-            this.refUser = OrionMapper.extractProperty(data, "refUser");
+            this.refUser = OrionMapper.extractProperty(data, "alertSource");
             this.refDevice = OrionMapper.extractProperty(data, "refDevice");
             this.description = OrionMapper.extractProperty(data, "description");
             this.dateTime = OrionMapper.extractTimeProperty(data, "dateObserved");
             this.location = OrionMapper.extractCoordinateProperty(data);
             this.address = OrionMapper.extractMapProperty(data, "address");
             this.locationDescription = OrionMapper.extractFromMapProperty(address, "streetAddress") + ", " + OrionMapper.extractFromMapProperty(address, "addressLocality");
-            this.dataSource = OrionMapper.extractProperty(data, "alertSource");
+            this.dataSource = OrionMapper.extractProperty(data, "dataSource");
             this.severity = OrionMapper.extractProperty(data, "severity");
         }
     }
