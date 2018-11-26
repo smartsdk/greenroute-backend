@@ -26,4 +26,6 @@ public interface TripRepository extends MongoRepository<Trip, String>{
     //public List<Trip> findAllByOrderByDateDesc();
     
     public List<Trip> findById(String id);
+    
+    public List<Trip> findBySharedIsTrue();
 }

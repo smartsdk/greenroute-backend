@@ -26,7 +26,10 @@ import org.springframework.data.annotation.Id;
     "mode",
     "time",
     "maxWalkDistance",
-    "segments"
+    "segments",
+    "refUser",
+    "shared",
+    "rate"
 })
 public class Trip {
     
@@ -48,14 +51,15 @@ public class Trip {
     private String maxWalkDistance;
     @JsonProperty("segments")
     private List<Segment> segments = null;
-
+    @JsonProperty("refUser")
 	private String refUser;
-    private boolean shared;
+    @JsonProperty("shared")
+    private Boolean shared;
+    @JsonProperty("rate")
+    private Integer rate;
 
 	@JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-    
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();  
     
     
     @JsonProperty("wheelchair")
@@ -170,11 +174,19 @@ public class Trip {
     	this.refUser = refUser;
     }
 
-    public boolean isShared() {
+    public Boolean isShared() {
     	return shared;
     }
     
-    public void setShared(boolean shared) {
+    public void setShared(Boolean shared) {
     	this.shared = shared;
     }
+
+	public Integer getRate() {
+		return rate;
+	}
+
+	public void setRate(Integer rate) {
+		this.rate = rate;
+	}
 }
