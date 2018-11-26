@@ -51,8 +51,6 @@ public class TripController {
     public ResponseEntity<Trip> createNotification(@RequestBody Trip trip, @PathVariable("id") String id) throws URISyntaxException {
     	
     	trip.setRefUser(id);
-    	trip.setShared(false);
-        
 	    tripRepository.save(trip);
 	    return ResponseEntity.created(new URI("/back-sdk/trips/" + trip.getId())).body(trip);
     }
@@ -68,7 +66,7 @@ public class TripController {
     }    
     
     /**
-     * Get all trips
+     * Get all shared trips
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -76,8 +74,7 @@ public class TripController {
 
     	List<Trip> trips = null;
         try {
-            trips = tripRepository.findAll();
-            
+        	trips = tripRepository.findBySharedIsTrue();
             if (trips == null) {
                 return ResponseEntity.accepted().body(new ArrayList<>(0));
             } else {
@@ -88,7 +85,7 @@ public class TripController {
             LOGGER.error("Error retrieving all trips", ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
         }
-    }
+    }   
     
     /**
      * Get trips by user
