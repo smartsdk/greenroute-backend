@@ -9,9 +9,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-
+import mx.infotec.smartcity.backend.model.EmissionFactor;
+import mx.infotec.smartcity.backend.model.Pollutant;
+import mx.infotec.smartcity.backend.model.trip.Segment;
 import mx.infotec.smartcity.backend.model.trip.Trip;
+import mx.infotec.smartcity.backend.persistence.EmissionFactorRepository;
 import mx.infotec.smartcity.backend.persistence.TripRepository;
 
 import org.slf4j.Logger;
@@ -25,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -40,6 +44,9 @@ public class TripController {
     @Autowired
     private TripRepository tripRepository;
     
+    @Autowired
+    private EmissionFactorRepository emissionFactorRepository;
+    
     /**
      * Save Trip
      * @param trip
@@ -51,6 +58,37 @@ public class TripController {
     public ResponseEntity<Trip> createNotification(@RequestBody Trip trip, @PathVariable("id") String id) throws URISyntaxException {
     	
     	trip.setRefUser(id);
+    	
+    	List<Pollutant> pollutants = new ArrayList<Pollutant>(); 
+    	Double co2= 0.0;
+    	Double ch4= 0.0;
+    	Double n2o= 0.0;
+    	Double totalDistance= 0.0;
+    	
+    	for (Segment segment : trip.getSegments()) {
+    		
+    		String mode = segment.getMode().equals("Public Transportation")? segment.getAgencyId() : segment.getMode();
+    		
+    		try {
+				List<EmissionFactor> list = emissionFactorRepository.findByTransportMode(mode);
+				Map<String, EmissionFactor> factors = list.stream().collect(Collectors.toMap(EmissionFactor::getName, item -> item));
+
+				Double distance = segment.getDistance()/1000;
+				totalDistance += distance; //km
+
+				co2 += distance*factors.get("co2").getValue();
+				ch4 += distance*factors.get("ch4").getValue();
+				n2o += distance*factors.get("n2o").getValue();
+			} catch (Exception e) {
+				LOGGER.error("Emission Factors calculation error", e);
+			}
+		}
+    	
+    	pollutants.add(new Pollutant("co2", "Carbon Dioxide", co2, totalDistance, "g/km"));
+    	pollutants.add(new Pollutant("ch4", "Methane", ch4, totalDistance, "g/km"));
+    	pollutants.add(new Pollutant("n20", "Nitrous Oxide", n2o, totalDistance, "g/km"));
+    	trip.setPollutants(pollutants);
+    	
 	    tripRepository.save(trip);
 	    return ResponseEntity.created(new URI("/back-sdk/trips/" + trip.getId())).body(trip);
     }

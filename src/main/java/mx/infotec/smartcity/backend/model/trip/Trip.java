@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import mx.infotec.smartcity.backend.model.Pollutant;
+
 import org.springframework.data.annotation.Id;
 
 /**
@@ -29,7 +32,8 @@ import org.springframework.data.annotation.Id;
     "segments",
     "refUser",
     "shared",
-    "rate"
+    "rate",
+    "pollutants"
 })
 public class Trip {
     
@@ -57,6 +61,8 @@ public class Trip {
     private Boolean shared;
     @JsonProperty("rate")
     private Integer rate;
+    @JsonProperty("pollutants")
+    private List<Pollutant> pollutants;
 
 	@JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();  
@@ -188,5 +194,15 @@ public class Trip {
 
 	public void setRate(Integer rate) {
 		this.rate = rate;
+	}
+
+	@JsonProperty("pollutants")
+	public List<Pollutant> getPollutants() {
+		return pollutants;
+	}
+
+	@JsonProperty("pollutants")
+	public void setPollutants(List<Pollutant> pollutants) {
+		this.pollutants = pollutants;
 	}
 }
