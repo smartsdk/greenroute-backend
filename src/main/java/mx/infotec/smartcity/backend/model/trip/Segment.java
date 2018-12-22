@@ -41,6 +41,15 @@ public class Segment {
     private String path;
     @JsonProperty("instructions")
     private List<String> instructions = null;
+    
+	@JsonProperty("mode")
+    private String mode;
+    @JsonProperty("agencyId")
+    private String agencyId;
+    @JsonProperty("agencyName")
+    private String agencyName;
+    @JsonProperty("duration")
+    private Double duration;
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -95,5 +104,38 @@ public class Segment {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+    public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public String getAgencyId() {
+		return agencyId;
+	}
+
+	public void setAgencyId(String agencyId) {
+		this.agencyId = agencyId;
+	}
+
+	public String getAgencyName() {
+		return agencyName;
+	}
+
+	public void setAgencyName(String agencyName) {
+		this.agencyName = agencyName;
+	}
+
+	public Double getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Double duration) {
+		this.duration = duration;
+	}
+
 
 }
