@@ -26,6 +26,8 @@ public class Pollutant {
 	private Double distanceTravelled;
 	@JsonProperty("unit")
 	private String unit;
+	
+	public Pollutant() {}
 
 	public Pollutant(String id, String name, Double value) {
 		this.id = id;
