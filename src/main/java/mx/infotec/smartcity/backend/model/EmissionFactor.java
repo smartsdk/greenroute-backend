@@ -9,6 +9,8 @@ public class EmissionFactor {
 	private String unit;
 	private String source;
 	
+	public EmissionFactor() {}
+	
 	public EmissionFactor(String id, String name, Double value, String unit) {
 		this.id = id;
 		this.name = name;
