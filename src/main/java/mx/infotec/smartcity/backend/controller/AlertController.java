@@ -1,18 +1,14 @@
 package mx.infotec.smartcity.backend.controller;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import mx.infotec.smartcity.backend.controller.websocket.AlertSocketController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mx.infotec.smartcity.backend.model.Alert;
 import mx.infotec.smartcity.backend.model.Data;
-import mx.infotec.smartcity.backend.model.Notification;
 import mx.infotec.smartcity.backend.model.UserProfile;
 import mx.infotec.smartcity.backend.persistence.AlertRepository;
 import mx.infotec.smartcity.backend.persistence.UserProfileRepository;
@@ -37,6 +32,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 import mx.infotec.smartcity.backend.model.OrionAlert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationListener;
 
 /**
  * Return alerts and create notifications
@@ -50,11 +48,16 @@ public class AlertController {
     private AlertRepository alertRepository;
     @Autowired
     private UserProfileRepository userProfileRepository;
+    
+    @Autowired
+    public AlertSocketController socket = new AlertSocketController();
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationListener.class);
 
     // @RequestMapping(method = RequestMethod.GET)
     // public List<Alert> getAll() {
     // List<Alert> res = alertRepository.findAllByOrderByDateTimeDesc();
-    //
+    //  
     // if (res == null) {
     // return new ArrayList<>();
     // } else {
@@ -404,7 +407,14 @@ public class AlertController {
                         alertRepository.save(alert);
                 }
             }else if(data.getType().equals("Alert")){
-                alertRepository.save(new Alert(data, "", ""));
+                Alert alerta = new Alert(data, "", "");
+                alertRepository.save(alerta);
+                
+                try{
+                    socket.pushAlert(alerta);
+                }catch (Exception e){
+                    LOGGER.error(e.toString());
+                }
             }
         }
         
