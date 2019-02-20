@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/smartcity")
                 .setHandshakeHandler(new DefaultHandshakeHandler(new TomcatRequestUpgradeStrategy()))
-        	//.setAllowedOrigins("http://localhost:8080")
+        	.setAllowedOrigins("https://app1.greenroutesdk.com.mx")
         	.withSockJS();
     }
 
